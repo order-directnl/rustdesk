@@ -1,0 +1,38 @@
+Order-Direct Support
+Legal and open-source notices
+
+Order-Direct Support is a modified distribution of the open-source RustDesk client.
+
+RustDesk is copyright its respective contributors and copyright holders, including
+Purslane Tech Pte. Ltd. The original RustDesk project is available at:
+https://github.com/rustdesk/rustdesk
+
+This modified distribution is not an official RustDesk release.
+
+License
+-------
+The RustDesk client is distributed under the GNU Affero General Public License,
+version 3 (GNU AGPLv3). The Order-Direct modifications to AGPL-covered RustDesk
+code are distributed under the same license.
+
+A copy of the GNU AGPLv3 is included with this distribution as LICENCE.txt.
+
+Corresponding source code
+-------------------------
+The corresponding source code for the exact build is identified in SOURCE.txt,
+which is generated together with each production build.
+
+Third-party software
+--------------------
+This application also contains third-party software components. Those components
+remain subject to their respective license and copyright terms. License material
+embedded by Flutter and upstream dependencies is retained in the built
+application. The corresponding source repositories and dependency manifests are
+available through the source locations listed in SOURCE.txt.
+
+Order-Direct modifications
+--------------------------
+Modifications and Order-Direct-specific branding:
+Copyright (C) 2026 Order-Direct B.V.
+
+No additional restriction is imposed on rights granted under the GNU AGPLv3.
