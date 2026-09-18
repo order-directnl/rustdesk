@@ -15,12 +15,15 @@ The RustDesk client is distributed under the GNU Affero General Public License,
 version 3 (GNU AGPLv3). The Order-Direct modifications to AGPL-covered RustDesk
 code are distributed under the same license.
 
-A copy of the GNU AGPLv3 is included with this distribution as LICENCE.txt.
+The GNU AGPLv3 license text, open-source notices, and source information for distributed builds are published at:
+https://www.order-direct.nl/software
 
 Corresponding source code
 -------------------------
-The corresponding source code for the exact build is identified in SOURCE.txt,
-which is generated together with each production build.
+The corresponding source code information for each distributed build is published at:
+https://www.order-direct.nl/software
+
+The source repositories are public and remain available at the locations listed below.
 
 Third-party software
 --------------------
