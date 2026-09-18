@@ -16,12 +16,12 @@ version 3 (GNU AGPLv3). The Order-Direct modifications to AGPL-covered RustDesk
 code are distributed under the same license.
 
 The GNU AGPLv3 license text, open-source notices, and source information for distributed builds are published at:
-https://www.order-direct.nl/software
+https://www.order-direct.nl/open-source/order-direct-support
 
 Corresponding source code
 -------------------------
 The corresponding source code information for each distributed build is published at:
-https://www.order-direct.nl/software
+https://www.order-direct.nl/open-source/order-direct-support
 
 The source repositories are public and remain available at the locations listed below.
 
