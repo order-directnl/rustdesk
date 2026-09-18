@@ -36,6 +36,34 @@ jobs:
         with:
           submodules: recursive
 
+      - name: Use Order-Direct hbb_common branding
+        shell: pwsh
+        run: |
+          git -C libs/hbb_common fetch origin production-branding
+          git -C libs/hbb_common checkout origin/production-branding
+
+      - name: Install Order-Direct branding assets
+        shell: pwsh
+        run: |
+          $required = @(
+            "branding/order-direct-logo.png",
+            "branding/order-direct-icon.png",
+            "branding/order-direct-icon.ico"
+          )
+
+          foreach ($file in $required) {
+            if (-not (Test-Path $file)) {
+              throw "Missing branding asset: $file"
+            }
+          }
+
+          Copy-Item "branding/order-direct-logo.png" "flutter/assets/logo.png" -Force
+          Copy-Item "branding/order-direct-logo.png" "flutter/assets/logo_light.png" -Force
+          Copy-Item "branding/order-direct-logo.png" "flutter/assets/logo_dark.png" -Force
+          Copy-Item "branding/order-direct-icon.png" "flutter/assets/icon.png" -Force
+          Copy-Item "branding/order-direct-icon.png" "res/icon.png" -Force
+          Copy-Item "branding/order-direct-icon.ico" "flutter/windows/runner/resources/app_icon.ico" -Force
+
       - name: Restore Flutter/Rust bridge
         uses: actions/download-artifact@v8
         with:
@@ -116,7 +144,7 @@ jobs:
         run: |
           python3 .\build.py --portable --flutter --hwcodec --vram
 
-      - name: Prepare test executable
+      - name: Prepare production executable
         shell: pwsh
         run: |
           $exe = Get-ChildItem -Path . -Filter "rustdesk-*-install.exe" |
@@ -134,5 +162,5 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: Order-Direct-Support-Windows-x64
-          path: Order-Direct-Support-test.exe
+          path: Order-Direct-Support.exe
           if-no-files-found: error
