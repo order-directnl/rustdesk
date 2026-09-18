@@ -144,7 +144,7 @@ jobs:
         run: |
           python3 .\build.py --portable --flutter --hwcodec --vram
 
-      - name: Prepare production distribution
+      - name: Prepare production executable
         shell: pwsh
         run: |
           $exe = Get-ChildItem -Path . -Filter "rustdesk-*-install.exe" |
@@ -154,53 +154,25 @@ jobs:
             throw "Portable RustDesk executable was not created"
           }
 
-          $dist = ".\dist\Order-Direct-Support"
-          New-Item -ItemType Directory -Force $dist | Out-Null
-
-          Copy-Item $exe.FullName "$dist\Order-Direct-Support.exe"
-          Copy-Item ".\LICENCE" "$dist\LICENCE.txt"
-          Copy-Item ".\NOTICE.txt" "$dist\NOTICE.txt"
+          Copy-Item $exe.FullName ".\Order-Direct-Support.exe"
 
           $rustdeskSha = (git rev-parse HEAD).Trim()
           $hbbSha = (git -C libs/hbb_common rev-parse HEAD).Trim()
 
-          $sourceLines = @(
-            "Order-Direct Support - Corresponding Source",
+          @(
+            "## Order-Direct Support build source",
             "",
-            "This binary was built from the following exact source revisions:",
-            "",
-            "Order-Direct RustDesk fork:",
-            "https://github.com/order-directnl/rustdesk",
-            "Commit: $rustdeskSha",
-            "",
-            "Order-Direct hbb_common fork:",
-            "https://github.com/order-directnl/hbb_common",
-            "Commit: $hbbSha",
-            "",
-            "Upstream RustDesk:",
-            "https://github.com/rustdesk/rustdesk",
-            "",
-            "License:",
-            "GNU Affero General Public License version 3 (GNU AGPLv3)",
-            "",
-            "The full license text is included as LICENCE.txt.",
-            "NOTICE.txt contains attribution and modification notices."
-          )
-          $sourceLines | Set-Content -Encoding UTF8 "$dist\SOURCE.txt"
+            "- Download/legal page: https://www.order-direct.nl/software",
+            "- RustDesk fork commit: $rustdeskSha",
+            "- hbb_common commit: $hbbSha",
+            "- License: GNU AGPLv3"
+          ) | Add-Content -Encoding UTF8 $env:GITHUB_STEP_SUMMARY
 
-          Compress-Archive `
-            -Path "$dist\*" `
-            -DestinationPath ".\Order-Direct-Support-Distribution.zip" `
-            -Force
+          Get-Item ".\Order-Direct-Support.exe"
 
-          Get-ChildItem $dist
-          Get-Item ".\Order-Direct-Support-Distribution.zip"
-
-      - name: Upload production distribution
+      - name: Upload production executable
         uses: actions/upload-artifact@v7
         with:
           name: Order-Direct-Support-Windows-x64
-          path: |
-            dist/Order-Direct-Support/
-            Order-Direct-Support-Distribution.zip
+          path: Order-Direct-Support.exe
           if-no-files-found: error
