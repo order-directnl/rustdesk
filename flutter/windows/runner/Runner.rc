@@ -90,6 +90,7 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "Order-Direct B.V." "\0"
+            VALUE "Comments", "Open-source information: https://www.order-direct.nl/software" "\0"
             VALUE "FileDescription", "Order-Direct Support" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "Order-Direct-Support" "\0"
