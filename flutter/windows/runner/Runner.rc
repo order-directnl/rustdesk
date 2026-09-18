@@ -93,7 +93,7 @@ BEGIN
             VALUE "FileDescription", "Order-Direct Support" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "Order-Direct-Support" "\0"
-            VALUE "LegalCopyright", "Copyright © 2026 Purslane Tech Pte. Ltd. All rights reserved." "\0"
+            VALUE "LegalCopyright", "RustDesk © 2026 Purslane Tech Pte. Ltd.; modifications © 2026 Order-Direct B.V." "\0"
             VALUE "OriginalFilename", "Order-Direct-Support.exe" "\0"
             VALUE "ProductName", "Order-Direct Support" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
