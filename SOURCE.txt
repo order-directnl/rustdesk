@@ -1,7 +1,7 @@
 Order-Direct Support - Corresponding Source
 
 Customer-facing license, open-source notices, and corresponding-source links:
-https://www.order-direct.nl/software
+https://www.order-direct.nl/open-source/order-direct-support
 
 Main source repository:
 https://github.com/order-directnl/rustdesk
