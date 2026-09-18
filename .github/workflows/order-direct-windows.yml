@@ -63,6 +63,7 @@ jobs:
           Copy-Item "branding/order-direct-icon.png" "flutter/assets/icon.png" -Force
           Copy-Item "branding/order-direct-icon.png" "res/icon.png" -Force
           Copy-Item "branding/order-direct-icon.ico" "flutter/windows/runner/resources/app_icon.ico" -Force
+          Copy-Item "branding/order-direct-icon.ico" "res/icon.ico" -Force
 
       - name: Restore Flutter/Rust bridge
         uses: actions/download-artifact@v8
