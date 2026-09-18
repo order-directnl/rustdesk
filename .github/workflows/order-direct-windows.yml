@@ -39,8 +39,8 @@ jobs:
       - name: Use Order-Direct hbb_common branding
         shell: pwsh
         run: |
-          git -C libs/hbb_common fetch origin production-branding
-          git -C libs/hbb_common checkout origin/production-branding
+          git -C libs/hbb_common fetch --depth=1 origin production-branding
+          git -C libs/hbb_common checkout --detach FETCH_HEAD
 
       - name: Install Order-Direct branding assets
         shell: pwsh
