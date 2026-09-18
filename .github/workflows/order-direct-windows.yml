@@ -144,7 +144,7 @@ jobs:
         run: |
           python3 .\build.py --portable --flutter --hwcodec --vram
 
-      - name: Prepare production executable
+      - name: Prepare production distribution
         shell: pwsh
         run: |
           $exe = Get-ChildItem -Path . -Filter "rustdesk-*-install.exe" |
@@ -154,13 +154,53 @@ jobs:
             throw "Portable RustDesk executable was not created"
           }
 
-          Copy-Item $exe.FullName ".\Order-Direct-Support.exe"
+          $dist = ".\dist\Order-Direct-Support"
+          New-Item -ItemType Directory -Force $dist | Out-Null
 
-          Get-Item ".\Order-Direct-Support.exe"
+          Copy-Item $exe.FullName "$dist\Order-Direct-Support.exe"
+          Copy-Item ".\LICENCE" "$dist\LICENCE.txt"
+          Copy-Item ".\NOTICE.txt" "$dist\NOTICE.txt"
 
-      - name: Upload executable
+          $rustdeskSha = (git rev-parse HEAD).Trim()
+          $hbbSha = (git -C libs/hbb_common rev-parse HEAD).Trim()
+
+          $sourceLines = @(
+            "Order-Direct Support - Corresponding Source",
+            "",
+            "This binary was built from the following exact source revisions:",
+            "",
+            "Order-Direct RustDesk fork:",
+            "https://github.com/order-directnl/rustdesk",
+            "Commit: $rustdeskSha",
+            "",
+            "Order-Direct hbb_common fork:",
+            "https://github.com/order-directnl/hbb_common",
+            "Commit: $hbbSha",
+            "",
+            "Upstream RustDesk:",
+            "https://github.com/rustdesk/rustdesk",
+            "",
+            "License:",
+            "GNU Affero General Public License version 3 (GNU AGPLv3)",
+            "",
+            "The full license text is included as LICENCE.txt.",
+            "NOTICE.txt contains attribution and modification notices."
+          )
+          $sourceLines | Set-Content -Encoding UTF8 "$dist\SOURCE.txt"
+
+          Compress-Archive `
+            -Path "$dist\*" `
+            -DestinationPath ".\Order-Direct-Support-Distribution.zip" `
+            -Force
+
+          Get-ChildItem $dist
+          Get-Item ".\Order-Direct-Support-Distribution.zip"
+
+      - name: Upload production distribution
         uses: actions/upload-artifact@v7
         with:
           name: Order-Direct-Support-Windows-x64
-          path: Order-Direct-Support.exe
+          path: |
+            dist/Order-Direct-Support/
+            Order-Direct-Support-Distribution.zip
           if-no-files-found: error
