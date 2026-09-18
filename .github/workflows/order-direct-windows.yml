@@ -162,7 +162,7 @@ jobs:
           @(
             "## Order-Direct Support build source",
             "",
-            "- Download/legal page: https://www.order-direct.nl/software",
+            "- Open-source/legal page: https://www.order-direct.nl/open-source/order-direct-support",
             "- RustDesk fork commit: $rustdeskSha",
             "- hbb_common commit: $hbbSha",
             "- License: GNU AGPLv3"
