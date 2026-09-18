@@ -154,9 +154,9 @@ jobs:
             throw "Portable RustDesk executable was not created"
           }
 
-          Copy-Item $exe.FullName ".\Order-Direct-Support-test.exe"
+          Copy-Item $exe.FullName ".\Order-Direct-Support.exe"
 
-          Get-Item ".\Order-Direct-Support-test.exe"
+          Get-Item ".\Order-Direct-Support.exe"
 
       - name: Upload executable
         uses: actions/upload-artifact@v7
