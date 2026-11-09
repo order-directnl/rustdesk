@@ -171,9 +171,60 @@ jobs:
 
           Get-Item ".\Order-Direct-Support.exe"
 
-      - name: Upload production executable
+      - name: Upload unsigned build output
+        uses: actions/upload-artifact@v7
+        with:
+          name: Order-Direct-Support-Windows-x64-unsigned
+          retention-days: 1
+          path: Order-Direct-Support.exe
+          if-no-files-found: error
+
+  sign-windows:
+    name: Sign Order-Direct Support
+    needs: build-windows
+    if: github.ref == 'refs/heads/production-branding'
+    runs-on: windows-2022
+    permissions:
+      actions: read
+      contents: read
+      id-token: write
+    steps:
+      - name: Download unsigned executable
+        uses: actions/download-artifact@v8
+        with:
+          name: Order-Direct-Support-Windows-x64-unsigned
+          path: signing
+
+      - name: Authenticate to Azure
+        uses: azure/login@935127ca5bb3c4b02c9c2c10060028383878f33f # v3
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Sign portable executable
+        uses: azure/artifact-signing-action@c0ae2c1d0c1847ab81ac0ab8521bee597cfedd30 # v2
+        with:
+          endpoint: https://weu.codesigning.azure.net/
+          signing-account-name: orderdirectsigning
+          certificate-profile-name: orderdirect-productie
+          files: ${{ github.workspace }}\signing\Order-Direct-Support.exe
+          file-digest: SHA256
+          timestamp-rfc3161: http://timestamp.acs.microsoft.com
+          timestamp-digest: SHA256
+
+      - name: Verify signature and timestamp
+        shell: pwsh
+        run: |
+          $signature = Get-AuthenticodeSignature -LiteralPath 'signing/Order-Direct-Support.exe'
+          if ($signature.Status -ne 'Valid' -or -not $signature.TimeStamperCertificate) {
+            throw "Signature or timestamp verification failed: $($signature.StatusMessage)"
+          }
+          Write-Host "Publisher: $($signature.SignerCertificate.Subject)"
+
+      - name: Upload signed production executable
         uses: actions/upload-artifact@v7
         with:
           name: Order-Direct-Support-Windows-x64
-          path: Order-Direct-Support.exe
+          path: signing/Order-Direct-Support.exe
           if-no-files-found: error
