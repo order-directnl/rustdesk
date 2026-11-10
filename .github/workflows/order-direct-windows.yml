@@ -207,7 +207,7 @@ jobs:
         with:
           endpoint: https://weu.codesigning.azure.net/
           signing-account-name: orderdirectsigning
-          certificate-profile-name: orderdirect-productie
+          certificate-profile-name: order-direct-productie
           files: ${{ github.workspace }}\signing\Order-Direct-Support.exe
           file-digest: SHA256
           timestamp-rfc3161: http://timestamp.acs.microsoft.com
